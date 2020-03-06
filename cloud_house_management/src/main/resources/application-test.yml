@@ -1,0 +1,62 @@
+#服务器配置
+server:
+  port: 8848
+
+  servlet:
+    session:
+      timeout: 10
+    context-path: /cloud_house_authentication
+
+#数据库配置、驱动、JPA
+spring:
+  datasource:
+    #test
+    url: jdbc:mysql://rm-wz9r1o3f8f4m9qbv8ko.mysql.rds.aliyuncs.com:3306/cloud_house?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: root
+    password: Rbi@2019@Red
+
+    #Pro
+    #    url: jdbc:mysql://139.9.225.140:3306/cloud_house?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=true
+    #    username: root
+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    #设置innerDB
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+
+
+    #Redis配置
+  #  redis:
+  #    host: 127.0.0.1
+  #    password:
+  #    database: 0
+  #    port: 6379
+  #    jedis:
+  #      pool:
+  #        max-active: 8
+  #        max-idle: 8
+  #        max-wait:
+  #        min-idle: 0
+  #    timeout: 0
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  mvc:
+    static-path-pattern: /**
+    view:
+      prefix: /pages/
+      suffix: .html
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

@@ -1,0 +1,65 @@
+#服务器配置
+server:
+  port: 8147
+
+  servlet:
+    session:
+      timeout: 10
+    context-path: /cloud_house_admin
+
+#传输配置
+http:
+  encoding:
+    charset: utf-8
+    enable: true
+
+#数据库配置、驱动、JPA
+spring:
+  #Redis配置
+  redis:
+    host: 139.9.225.98
+    password: rbi2018@
+    database: 3
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait:
+        min-idle: 0
+    timeout: 20000
+  datasource:
+    #test
+    url: jdbc:mysql://139.9.225.140:3306/cloud_house?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: root
+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    #设置innerDB
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  mvc:
+    static-path-pattern: /complaint-img/**
+  resources:
+    static-locations: file:/var/www/html/complaint-img
+
+#mybatis配置
+mybatis:
+  typeAliasesPackage: com.rbi.admin.entity
+  mapperLocations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+path:
+  excelPath: /var/www/html/cloud_house/customerInfo/
+  findExcelPath: http://139.9.155.62:80/cloud_house/customerInfo/

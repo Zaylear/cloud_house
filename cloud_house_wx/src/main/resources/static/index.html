@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+<!--<div>-->
+  <button onclick="shouquan()" style="width:6vw;height: 4vh; background: coral" >授权</button>
+<!--</div>-->
+<div>
+  <!--<input type="text">-->
+  <button onclick="onBridgeReady()" style="width:6vw;height: 4vh; background: coral" id="pay">支付</button>
+</div>
+</body>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript">
+  var  openid ;
+  function shouquan() {
+        var url = window.location.href;
+        var a= url.split("?")[1].split("code=")[1].split("&")[0];
+		onBridgeReady("a");
+        $.get({
+            url: "http://2m2766a493.iok.la/gettoken?code="+a,
+            type:'GET',
+			contentType: "application/json;charset=utf-8",
+			 dataType: 'json',
+            success: function(data){
+                console.log(data);
+                openid = data.openid;
+                var jsondata = {
+                    'openid': data.openid,
+                    'roomCode' : 'TKZC-A1-1D-1DY-1001',
+                    'datedif' : '9',
+                    'chargeCode' : 'WYF-ZZ',
+                    'couponId':'-1'
+                };
+                $.ajax({
+                    url: "http://2m2766a493.iok.la/wx/wxchargepay",
+                    type:'POST',
+					contentType: "application/json;charset=utf-8",
+                    data: jsondata,
+                    dataType: 'json',//从php返回的值以 JSON方式 解释
+                    success: function(data){
+                        if (data.code === '1000'){
+                           // onBridgeReady(data.entity);
+
+                        }
+                        // console.log(data);
+                    }})
+            }})
+  }
+  function onBridgeReady(){
+      WeixinJSBridge.invoke(
+          'getBrandWCPayRequest', {
+        "appId": "wxccc7e28f7cb8170c",
+        "nonceStr": "2bB03pZO87feo17f",
+        "packagedto": "prepay_id=wx09134138182224ef471feb871221772600",
+        "paySign": "9D246396DBE713E870C4CC106B9F949D4141CC4018BF5B3EC93F26226CA2E020",
+        "signType": "HMAC-SHA256",
+        "timeStamp": "1562650898"
+          },
+          function(res){
+              if(res.err_msg === "get_brand_wcpay_request:ok" ){
+                  // 使用以上方式判断前端返回,微信团队郑重提示：
+                  //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+              }
+          });
+  }
+</script>
+</html>

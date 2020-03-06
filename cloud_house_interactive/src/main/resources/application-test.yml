@@ -1,0 +1,77 @@
+#服务器配置
+server:
+  port: 8849
+  session:
+
+  servlet:
+    session:
+      timeout: 10
+    context-path: /cloud_house_interactive
+
+#传输配置
+http:
+  encoding:
+    charset: utf-8
+    enable: true
+
+#数据库配置、驱动、JPA
+spring:
+  data:
+    redis:
+      repositories:
+        enabled: false
+  #Redis配置
+  redis:
+    host: 139.9.225.98
+    password: rbi2018@
+    database: 2
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait:
+        min-idle: 0
+    timeout: 5000
+  datasource:
+    url: jdbc:mysql://rm-wz9r1o3f8f4m9qbv8ko.mysql.rds.aliyuncs.com:3306/cloud_house?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: root
+    password: Rbi@2019@Red
+
+    #pro
+#    url: jdbc:mysql://139.9.225.140:3306/cloud_house?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8&useSSL=true
+#    username: root
+
+    #driver-class-name: com.mysql.cj.jdbc.Driver（6.0版本以上）
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    #设置innerDB
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+dubbo:
+  application:
+    name: interactive
+  registry:
+    protocol: zookeeper
+    address: 120.77.171.73:2181
+  protocol:
+    name: dubbo
+    port: 20884
+  consumer:
+    check: false
